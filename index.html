@@ -84,7 +84,19 @@
         .form-msg.ok { color: #7ee2a8; }
         .form-msg.err { color: #ff9e8a; }
         .works__box__content a { line-height: 0; display: inline-flex; position: relative; z-index: 3; pointer-events: auto; cursor: pointer; }
-        .works__box { cursor: pointer; }
+        .works__box { cursor: grab; }
+        .mySwiper:active .works__box { cursor: grabbing; }
+
+        /* Works prev/next arrows */
+        .works-nav { display: flex; justify-content: center; gap: 1.4rem; margin-top: 2.2rem; }
+        .works-nav__btn {
+            width: 4rem; height: 4rem; border-radius: 50%; border: none; cursor: pointer;
+            font-size: 1.8rem; line-height: 1; color: #203857; background-color: #ee6c4d;
+            display: inline-flex; justify-content: center; align-items: center;
+            transition: transform 0.2s ease, background-color 0.2s ease;
+        }
+        .works-nav__btn:hover { background-color: #e8dab2; transform: translateY(-2px); }
+        .works-nav__btn:active { transform: scale(0.94); }
         @media (max-width: 575px) {
             .works__box__title { font-size: 1.4rem; }
             .works__box__desc { font-size: 0.95rem; }
@@ -337,6 +349,11 @@
                                 </div> <!-- ./swiper-slide -->
                             </div> <!-- ./swiper-wrapper -->
                         </div> <!-- ./swiper -->
+
+                        <div class="works-nav">
+                            <button type="button" class="works-nav__btn" id="works-prev" aria-label="Previous works">&#8592;</button>
+                            <button type="button" class="works-nav__btn" id="works-next" aria-label="Next works">&#8594;</button>
+                        </div> <!-- ./works-nav -->
                     </div> <!-- ./col-md-10 -->
                 </div> <!-- ./row -->
             </div> <!-- ./container -->
@@ -471,7 +488,7 @@
                                 </div> <!-- ./testimonials__card__bottom__img -->
                                 <div class="testimonials__card__bottom__desc">
                                     <p class="testimonials__card__bottom__desc__name">Philip Jonas</p>
-                                    <p class="testimonials__card__bottom__desc__job">EASTC</p>
+                                    <p class="testimonials__card__bottom__desc__job">GHALA AI</p>
                                 </div> <!-- ./testimonials__card__bottom__desc -->
                             </div> <!-- ./testimonials__card__bottom -->
                         </div> <!-- ./testimonials__card -->
@@ -686,6 +703,19 @@
             var link = box.querySelector('.works__box__icons a[target="_blank"]');
             if (link && link.href) window.open(link.href, '_blank', 'noopener');
         });
+
+        // Works slider: wire prev/next arrows + let manual control take over from autoplay
+        (function () {
+            var sw = document.querySelector('.mySwiper');
+            function inst() { return sw && sw.swiper; }
+            function stopAuto() { var s = inst(); if (s && s.autoplay) s.autoplay.stop(); }
+            var prev = document.getElementById('works-prev');
+            var next = document.getElementById('works-next');
+            if (prev) prev.addEventListener('click', function () { var s = inst(); if (s) { s.slidePrev(); stopAuto(); } });
+            if (next) next.addEventListener('click', function () { var s = inst(); if (s) { s.slideNext(); stopAuto(); } });
+            // stop autoplay once the user starts dragging, so it doesn't move on its own
+            if (sw) sw.addEventListener('pointerdown', stopAuto);
+        })();
 
         // Contact form -> Formspree (AJAX, no page redirect)
         var contactForm = document.getElementById('my-form');
