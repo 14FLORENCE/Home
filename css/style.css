@@ -214,17 +214,149 @@ section.resume-section .resume-item .resume-date {
 }
 
 /*==================================================
-                      ABOUT
+        ABOUT / HERO  (portfolio-john style — responsive on every device)
 ====================================================*/
 #about {
-    background-image: url(../img/profile-banner.jpg);
+    position: relative;
+    background-image: linear-gradient(rgba(15, 15, 15, 0.74), rgba(20, 24, 31, 0.86)), url(../img/profile-banner.jpg);
     background-size: cover;
     background-position: center center;
     background-repeat: no-repeat;
+    min-height: 100vh;
+    text-align: center;
+    align-items: center;
+    justify-content: center;
 }
 
-#about h1 {
-    /*font-size: 100%;*/
+.hero-content {
+    width: 100%;
+    max-width: 720px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+/* Circular profile photo ringed in coral */
+.hero-photo {
+    width: clamp(8rem, 30vw, 13rem);
+    height: clamp(8rem, 30vw, 13rem);
+    border-radius: 50%;
+    object-fit: cover;
+    border: 0.3rem solid #ee6c4d;
+    box-shadow: 0 0 0 0.55rem rgba(238, 108, 77, 0.18);
+    margin-bottom: 2rem;
+    transition: transform 0.3s ease-in;
+}
+
+.hero-photo:hover {
+    transform: scale(1.05);
+}
+
+.hero-hello {
+    font-family: 'Lato', sans-serif;
+    font-weight: 900;
+    text-transform: capitalize;
+    color: #e8dab2;
+    font-size: clamp(2rem, 7vw, 3.6rem);
+    letter-spacing: 0.12rem;
+    line-height: 1.1;
+    margin-bottom: 0.6rem;
+}
+
+.hero-title {
+    font-family: 'Lato', sans-serif;
+    font-weight: 700;
+    text-transform: capitalize;
+    color: #e8dab2;
+    font-size: clamp(1.35rem, 5vw, 2.7rem);
+    line-height: 1.35;
+    margin-bottom: 1.6rem;
+}
+
+.hero-title span {
+    color: #ee6c4d;
+}
+
+/* role with animated coral fill on hover */
+.hero-role {
+    position: relative;
+    display: inline-block;
+    isolation: isolate;
+    padding: 0 0.2rem;
+    transition: color 0.3s ease 0.1s;
+}
+
+.hero-role::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: -1;
+    width: 0;
+    height: 100%;
+    border-radius: 0.4rem;
+    background-color: #ee6c4d;
+    transition: width 0.33s ease-in 0s;
+}
+
+.hero-role:hover::before {
+    width: 100%;
+}
+
+.hero-role:hover {
+    color: #e8dab2 !important;
+}
+
+.hero-desc {
+    font-family: 'Lato', sans-serif;
+    color: #d4dae2;
+    max-width: 540px;
+    margin: 0 auto 1.6rem auto;
+    font-size: clamp(0.95rem, 2.6vw, 1.05rem);
+    line-height: 1.75;
+}
+
+.hero-tagline {
+    font-family: 'Saira Extra Condensed', sans-serif;
+    text-transform: uppercase;
+    font-weight: 500;
+    font-size: clamp(1rem, 3vw, 1.35rem);
+    letter-spacing: 0.04rem;
+    color: #98a2b3;
+}
+
+.hero-tagline a {
+    color: #ee6c4d;
+}
+
+.hero-tagline a:hover {
+    color: #f3a18d;
+}
+
+/* social icons in the hero — coral on cream */
+#about .list-social-icons {
+    margin-top: 0.5rem;
+}
+
+#about .list-social-icons a {
+    color: #e8dab2;
+}
+
+#about .list-social-icons a:hover {
+    color: #ee6c4d;
+}
+
+#about .list-social-icons .fa-circle {
+    color: rgba(238, 108, 77, 0.16);
+}
+
+#about .list-social-icons a:hover .fa-circle {
+    color: rgba(238, 108, 77, 0.32);
+}
+
+@media (max-width: 575px) {
+    .hero-photo {
+        margin-bottom: 1.4rem;
+    }
 }
 
 /*==================================================
