@@ -693,17 +693,7 @@
     <!-- * My script file -->
     <script src="./dist/js/main.bundle.js"></script>
 
-    <!-- * Make every work tile open its project link (works for cloned loop slides too) -->
     <script>
-        document.addEventListener('click', function (e) {
-            // Let the explicit link / email icons behave normally
-            if (e.target.closest('.works__box__icons a')) return;
-            var box = e.target.closest('.works__box');
-            if (!box) return;
-            var link = box.querySelector('.works__box__icons a[target="_blank"]');
-            if (link && link.href) window.open(link.href, '_blank', 'noopener');
-        });
-
         // Works slider: wire prev/next arrows + let manual control take over from autoplay
         (function () {
             var sw = document.querySelector('.mySwiper');
