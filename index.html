@@ -115,6 +115,31 @@
             width: 8rem !important; height: 8rem !important;
             object-fit: cover; border: 0.3rem solid #e8dab2;
         }
+
+        /* Certificates — appended inside the Tools section */
+        .tools-extra { width: 100%; max-width: 100rem; margin: 3rem auto 0; }
+        .tools-extra__title {
+            font-family: 'Lato', sans-serif; font-weight: 700; text-transform: uppercase;
+            letter-spacing: .1rem; color: #ee6c4d; font-size: 1.6rem; margin-bottom: 1.8rem;
+        }
+        .cert-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(19rem, 1fr)); gap: 1.2rem; width: 100%; }
+        .cert-card {
+            display: flex; flex-direction: column;
+            background-color: rgba(32, 56, 87, .55); border: 1px solid rgba(232, 218, 178, .25);
+            border-radius: .8rem; overflow: hidden; text-align: left; text-decoration: none;
+            transition: border-color .2s ease, transform .2s ease;
+        }
+        .cert-card:hover { border-color: #ee6c4d; transform: translateY(-3px); }
+        .cert-card__media { aspect-ratio: 1.29 / 1; overflow: hidden; }
+        .cert-card__media img { width: 100%; height: 100%; object-fit: cover; display: block; transition: transform .4s ease; }
+        .cert-card:hover .cert-card__media img { transform: scale(1.06); }
+        .cert-card__body { display: flex; flex-direction: column; gap: .4rem; padding: 1rem 1.2rem 1.2rem; }
+        .cert-card__name { font-family: 'Lato', sans-serif; font-weight: 700; color: #e8dab2; font-size: 1.05rem; }
+        .cert-card__meta { font-family: 'Lato', sans-serif; color: #ee6c4d; font-size: .85rem; }
+        @media (max-width: 575px) {
+            .tools-extra__title { font-size: 1.3rem; }
+            .cert-card__name { font-size: .95rem; }
+        }
     </style>
 
     <!-- * This is html5shiv.js -->
@@ -309,7 +334,7 @@
                                             <p class="works__box__title">SENDA</p>
                                             <p class="works__box__desc">Bulk SMS and communication platform reaching customers at scale through text messaging.</p>
                                             <div class="works__box__icons">
-                                                <a href="https://senda.mifumolabs.com/" target="_blank" rel="noopener" aria-label="Visit SENDA"><i class="demo-icon icon-link"></i></a>
+                                                <a href="https://sendacopilot.com" target="_blank" rel="noopener" aria-label="Visit SENDA"><i class="demo-icon icon-link"></i></a>
                                                 <a href="mailto:florencesway@gmail.com" aria-label="Email Florence"><i class="demo-icon icon-mail-alt"></i></a>
                                             </div>
                                         </div> <!-- ./works__box__content -->
@@ -463,6 +488,82 @@
                         </div> <!-- ./tool-card -->
                     </div> <!-- ./col-4 -->
                 </div> <!-- ./row -->
+
+                <div class="tools-extra" id="certificates">
+                    <h3 class="tools-extra__title">Certificates</h3>
+                    <div class="cert-grid">
+                        <a class="cert-card" href="./img/certificate/GOOGLE%20AI.pdf" target="_blank" rel="noopener">
+                            <div class="cert-card__media"><img src="./img/certificate/thumbs/google-ai.jpg" alt="Google AI certificate" loading="lazy"></div>
+                            <div class="cert-card__body">
+                            <span class="cert-card__name">Google AI</span>
+                            <span class="cert-card__meta">Professional Certificate &middot; Google, via Coursera</span>
+                            </div>
+                        </a>
+                        <a class="cert-card" href="./img/certificate/GOOGLE%20PROJECT%20MANAGEMENT.pdf" target="_blank" rel="noopener">
+                            <div class="cert-card__media"><img src="./img/certificate/thumbs/google-project-management.jpg" alt="Google Project Management certificate" loading="lazy"></div>
+                            <div class="cert-card__body">
+                            <span class="cert-card__name">Google Project Management</span>
+                            <span class="cert-card__meta">Professional Certificate &middot; Google, via Coursera</span>
+                            </div>
+                        </a>
+                        <a class="cert-card" href="./img/certificate/AI%20FUNDAMENTAL.pdf" target="_blank" rel="noopener">
+                            <div class="cert-card__media"><img src="./img/certificate/thumbs/ai-fundamentals.jpg" alt="AI Fundamentals certificate" loading="lazy"></div>
+                            <div class="cert-card__body">
+                            <span class="cert-card__name">AI Fundamentals</span>
+                            <span class="cert-card__meta">Course Certificate &middot; Google, via Coursera</span>
+                            </div>
+                        </a>
+                        <a class="cert-card" href="./img/certificate/AI%20FOR%20BRAINSTORMING.pdf" target="_blank" rel="noopener">
+                            <div class="cert-card__media"><img src="./img/certificate/thumbs/ai-for-brainstorming.jpg" alt="AI for Brainstorming and Planning certificate" loading="lazy"></div>
+                            <div class="cert-card__body">
+                            <span class="cert-card__name">AI for Brainstorming and Planning</span>
+                            <span class="cert-card__meta">Course Certificate &middot; Google, via Coursera</span>
+                            </div>
+                        </a>
+                        <a class="cert-card" href="./img/certificate/AI%20FOR%20RESEARCH.pdf" target="_blank" rel="noopener">
+                            <div class="cert-card__media"><img src="./img/certificate/thumbs/ai-for-research.jpg" alt="AI for Research and Insights certificate" loading="lazy"></div>
+                            <div class="cert-card__body">
+                            <span class="cert-card__name">AI for Research and Insights</span>
+                            <span class="cert-card__meta">Course Certificate &middot; Google, via Coursera</span>
+                            </div>
+                        </a>
+                        <a class="cert-card" href="./img/certificate/AI%20FOR%20WRITING%20AND%20COMMUNICATING.pdf" target="_blank" rel="noopener">
+                            <div class="cert-card__media"><img src="./img/certificate/thumbs/ai-for-writing.jpg" alt="AI for Writing and Communicating certificate" loading="lazy"></div>
+                            <div class="cert-card__body">
+                            <span class="cert-card__name">AI for Writing and Communicating</span>
+                            <span class="cert-card__meta">Course Certificate &middot; Google, via Coursera</span>
+                            </div>
+                        </a>
+                        <a class="cert-card" href="./img/certificate/AI%20FOR%20CONTENT%20CREATION.pdf" target="_blank" rel="noopener">
+                            <div class="cert-card__media"><img src="./img/certificate/thumbs/ai-for-content-creation.jpg" alt="AI for Content Creation certificate" loading="lazy"></div>
+                            <div class="cert-card__body">
+                            <span class="cert-card__name">AI for Content Creation</span>
+                            <span class="cert-card__meta">Course Certificate &middot; Google, via Coursera</span>
+                            </div>
+                        </a>
+                        <a class="cert-card" href="./img/certificate/AI%20FOR%20DATA%20ANALYTICS.pdf" target="_blank" rel="noopener">
+                            <div class="cert-card__media"><img src="./img/certificate/thumbs/ai-for-data-analysis.jpg" alt="AI for Data Analysis certificate" loading="lazy"></div>
+                            <div class="cert-card__body">
+                            <span class="cert-card__name">AI for Data Analysis</span>
+                            <span class="cert-card__meta">Course Certificate &middot; Google, via Coursera</span>
+                            </div>
+                        </a>
+                        <a class="cert-card" href="./img/certificate/AI%20FOR%20APP%20BUILDING.pdf" target="_blank" rel="noopener">
+                            <div class="cert-card__media"><img src="./img/certificate/thumbs/ai-for-app-building.jpg" alt="AI for App Building certificate" loading="lazy"></div>
+                            <div class="cert-card__body">
+                            <span class="cert-card__name">AI for App Building</span>
+                            <span class="cert-card__meta">Course Certificate &middot; Google, via Coursera</span>
+                            </div>
+                        </a>
+                        <a class="cert-card" href="./img/certificate/ACCELERATE%20YOUR%20JOB%20SEARCH%20WITH%20AI.pdf" target="_blank" rel="noopener">
+                            <div class="cert-card__media"><img src="./img/certificate/thumbs/accelerate-job-search.jpg" alt="Accelerate Your Job Search with AI certificate" loading="lazy"></div>
+                            <div class="cert-card__body">
+                            <span class="cert-card__name">Accelerate Your Job Search with AI</span>
+                            <span class="cert-card__meta">Course Certificate &middot; Google, via Coursera</span>
+                            </div>
+                        </a>
+                    </div> <!-- ./cert-grid -->
+                </div> <!-- ./tools-extra -->
             </div> <!-- ./container -->
         </section> <!-- ./tools -->
 
