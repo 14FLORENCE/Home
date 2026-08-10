@@ -116,8 +116,15 @@
             object-fit: cover; border: 0.3rem solid #e8dab2;
         }
 
+        /* Tools panel now holds both the tool icons and the certificates list, which is
+           taller than one screen on mobile. Let this panel scroll internally (instead of
+           relying on flex-centering, which clips overflow off the TOP of the screen) so
+           every tool icon and every certificate stays reachable by scrolling. */
+        .tools { overflow-y: auto; -webkit-overflow-scrolling: touch; justify-content: flex-start !important; padding: 9rem 0 6rem; }
+        .tools .container { padding-top: 2rem; }
+
         /* Certificates — appended inside the Tools section */
-        .tools-extra { width: 100%; max-width: 100rem; margin: 3rem auto 0; }
+        .tools-extra { width: 100%; max-width: 100rem; margin: 3.5rem auto 0; padding-top: 2.4rem; border-top: 1px solid rgba(232, 218, 178, .18); }
         .tools-extra__title {
             font-family: 'Lato', sans-serif; font-weight: 700; text-transform: uppercase;
             letter-spacing: .1rem; color: #ee6c4d; font-size: 1.6rem; margin-bottom: 1.8rem;
@@ -136,6 +143,18 @@
         .cert-card__body { display: flex; flex-direction: column; gap: .4rem; padding: 1rem 1.2rem 1.2rem; }
         .cert-card__name { font-family: 'Lato', sans-serif; font-weight: 700; color: #e8dab2; font-size: 1.05rem; }
         .cert-card__meta { font-family: 'Lato', sans-serif; color: #ee6c4d; font-size: .85rem; }
+        @media (max-width: 767px) {
+            .tools { padding: 7rem 0 5rem; }
+            .tools .container { padding-top: 1rem; }
+            .tool-card { width: 8rem; height: 8rem; margin-bottom: 1.6rem; }
+            .tools-extra { margin-top: 2.5rem; padding-top: 2rem; }
+            .tools-extra__title { font-size: 1.4rem; margin-bottom: 1.2rem; }
+            .cert-grid { grid-template-columns: repeat(2, 1fr); gap: .8rem; }
+        }
+        @media (max-width: 480px) {
+            .cert-grid { grid-template-columns: 1fr; }
+            .cert-card__media { aspect-ratio: 1.5 / 1; }
+        }
         @media (max-width: 575px) {
             .tools-extra__title { font-size: 1.3rem; }
             .cert-card__name { font-size: .95rem; }
