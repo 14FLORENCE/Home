@@ -116,19 +116,37 @@
             object-fit: cover; border: 0.3rem solid #e8dab2;
         }
 
-        /* Tools panel now holds both the tool icons and the certificates list, which is
-           taller than one screen on mobile. Let this panel scroll internally (instead of
-           relying on flex-centering, which clips overflow off the TOP of the screen) so
-           every tool icon and every certificate stays reachable by scrolling. */
-        .tools { overflow-y: auto; -webkit-overflow-scrolling: touch; justify-content: flex-start !important; padding: 9rem 0 6rem; }
-        .tools .container { padding-top: 2rem; }
+        /* Pull the whole panel's content up (instead of the theme's default dead-centering)
+           so the switch sits near the top and the certificate list gets the freed-up
+           vertical room below it to show a couple of full rows before it has to scroll. */
+        .tools { justify-content: flex-start !important; padding: 7rem 0 5rem; }
 
-        /* Certificates — appended inside the Tools section */
-        .tools-extra { width: 100%; max-width: 100rem; margin: 3.5rem auto 0; padding-top: 2.4rem; border-top: 1px solid rgba(232, 218, 178, .18); }
+        /* Tools / Certificates switcher — only one panel is shown at a time */
+        .tools-switch { display: flex; justify-content: center; gap: 1rem; margin-bottom: 2.4rem; flex-wrap: wrap; }
+        .tools-switch__btn {
+            font-family: 'Lato', sans-serif; font-weight: 700; text-transform: uppercase; letter-spacing: .08rem;
+            font-size: 1rem; color: #e8dab2; background-color: rgba(32, 56, 87, .55);
+            border: 1px solid rgba(232, 218, 178, .35); border-radius: 999px;
+            padding: .9rem 2.4rem; cursor: pointer; transition: background-color .2s ease, border-color .2s ease, color .2s ease;
+        }
+        .tools-switch__btn:hover { border-color: #ee6c4d; }
+        .tools-switch__btn.is-active { background-color: #ee6c4d; border-color: #ee6c4d; color: #203857; }
+        .tools-panel.is-hidden { display: none !important; }
+
+        .tools-extra { width: 100%; max-width: 100rem; margin: 0 auto; }
         .tools-extra__title {
             font-family: 'Lato', sans-serif; font-weight: 700; text-transform: uppercase;
-            letter-spacing: .1rem; color: #ee6c4d; font-size: 1.6rem; margin-bottom: 1.8rem;
+            letter-spacing: .1rem; color: #ee6c4d; font-size: 1.6rem; margin-bottom: 1.4rem;
         }
+        /* Both the tool icons and the certificate list get their own capped,
+           self-scrolling box instead of growing the whole Tools panel — that way
+           neither ever spills past the section's own boundaries into the site's
+           fixed nav / page chrome above and below it. */
+        .cert-scroll, .tools-scroll {
+            max-height: 64vh; overflow-y: auto;
+            scrollbar-width: none; -ms-overflow-style: none;
+        }
+        .cert-scroll::-webkit-scrollbar, .tools-scroll::-webkit-scrollbar { display: none; }
         .cert-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(19rem, 1fr)); gap: 1.2rem; width: 100%; }
         .cert-card {
             display: flex; flex-direction: column;
@@ -144,14 +162,20 @@
         .cert-card__name { font-family: 'Lato', sans-serif; font-weight: 700; color: #e8dab2; font-size: 1.05rem; }
         .cert-card__meta { font-family: 'Lato', sans-serif; color: #ee6c4d; font-size: .85rem; }
         @media (max-width: 767px) {
-            .tools { padding: 7rem 0 5rem; }
-            .tools .container { padding-top: 1rem; }
-            .tool-card { width: 8rem; height: 8rem; margin-bottom: 1.6rem; }
-            .tools-extra { margin-top: 2.5rem; padding-top: 2rem; }
-            .tools-extra__title { font-size: 1.4rem; margin-bottom: 1.2rem; }
+            /* Enough top clearance to clear the fixed icon nav bar, but no more —
+               the switch should sit just under it, not float in empty space. */
+            .tools { padding: 12rem 0 3rem; }
+            .tools .container { padding-top: 0; }
+            .tool-card { width: 7rem; height: 7rem; margin-bottom: 1.4rem; }
+            .tools-switch { margin-bottom: 1.8rem; }
+            .tools-switch__btn { padding: .8rem 1.8rem; font-size: .9rem; }
+            .tools-extra__title { font-size: 1.4rem; margin-bottom: 1rem; }
+            .cert-scroll, .tools-scroll { max-height: 50vh; }
             .cert-grid { grid-template-columns: repeat(2, 1fr); gap: .8rem; }
         }
         @media (max-width: 480px) {
+            .tools { padding: 11rem 0 2.5rem; }
+            .cert-scroll, .tools-scroll { max-height: 46vh; }
             .cert-grid { grid-template-columns: 1fr; }
             .cert-card__media { aspect-ratio: 1.5 / 1; }
         }
@@ -422,7 +446,12 @@
         <!-- * Start tools section -->
         <section class="tools mx-auto text-center" id="tools">
             <div class="container p-0">
-                <div class="row gx-0 gy-5 m-0">
+                <div class="tools-switch" role="tablist" aria-label="Tools and certificates">
+                    <button type="button" class="tools-switch__btn is-active" data-target="toolsIcons" role="tab" aria-selected="true">Tools</button>
+                    <button type="button" class="tools-switch__btn" data-target="certificates" role="tab" aria-selected="false">Certificates</button>
+                </div> <!-- ./tools-switch -->
+
+                <div class="row gx-0 gy-5 m-0 tools-panel tools-scroll" id="toolsIcons">
                     <div class="col-4 col-md-2">
                         <div class="tool-card d-flex justify-content-center align-items-center mx-auto text-center"
                             data-tool-img="Html">
@@ -467,8 +496,22 @@
 
                     <div class="col-4 col-md-2">
                         <div class="tool-card d-flex justify-content-center align-items-center mx-auto text-center"
-                            data-tool-img="Java">
-                            <img src="./assets/tools-svg/java.svg" alt="Java Pic">
+                            data-tool-img="PHP">
+                            <img src="./assets/tools-svg/php.svg" alt="PHP Pic">
+                        </div> <!-- ./tool-card -->
+                    </div> <!-- ./col-4 -->
+
+                    <div class="col-4 col-md-2">
+                        <div class="tool-card d-flex justify-content-center align-items-center mx-auto text-center"
+                            data-tool-img="Python">
+                            <img src="./assets/tools-svg/python.svg" alt="Python Pic">
+                        </div> <!-- ./tool-card -->
+                    </div> <!-- ./col-4 -->
+
+                    <div class="col-4 col-md-2">
+                        <div class="tool-card d-flex justify-content-center align-items-center mx-auto text-center"
+                            data-tool-img="Django">
+                            <img src="./assets/tools-svg/django.svg" alt="Django Pic">
                         </div> <!-- ./tool-card -->
                     </div> <!-- ./col-4 -->
 
@@ -476,13 +519,6 @@
                         <div class="tool-card d-flex justify-content-center align-items-center mx-auto text-center"
                             data-tool-img="ReactJS">
                             <img src="./assets/tools-svg/react.svg" alt="ReactJS Pic">
-                        </div> <!-- ./tool-card -->
-                    </div> <!-- ./col-4 -->
-
-                    <div class="col-4 col-md-2">
-                        <div class="tool-card d-flex justify-content-center align-items-center mx-auto text-center"
-                            data-tool-img="Angular">
-                            <img src="./assets/tools-svg/angular.svg" alt="Angular Pic">
                         </div> <!-- ./tool-card -->
                     </div> <!-- ./col-4 -->
 
@@ -506,10 +542,60 @@
                             <img src="./assets/tools-svg/vscode.svg" alt="VsCode Pic">
                         </div> <!-- ./tool-card -->
                     </div> <!-- ./col-4 -->
-                </div> <!-- ./row -->
 
-                <div class="tools-extra" id="certificates">
+                    <div class="col-4 col-md-2">
+                        <div class="tool-card d-flex justify-content-center align-items-center mx-auto text-center"
+                            data-tool-img="Supabase">
+                            <img src="./assets/tools-svg/supabase.svg" alt="Supabase Pic">
+                        </div> <!-- ./tool-card -->
+                    </div> <!-- ./col-4 -->
+
+                    <div class="col-4 col-md-2">
+                        <div class="tool-card d-flex justify-content-center align-items-center mx-auto text-center"
+                            data-tool-img="AWS">
+                            <img src="./assets/tools-svg/aws.svg" alt="AWS Pic">
+                        </div> <!-- ./tool-card -->
+                    </div> <!-- ./col-4 -->
+
+                    <div class="col-4 col-md-2">
+                        <div class="tool-card d-flex justify-content-center align-items-center mx-auto text-center"
+                            data-tool-img="GitHub">
+                            <img src="./assets/tools-svg/github.svg" alt="GitHub Pic">
+                        </div> <!-- ./tool-card -->
+                    </div> <!-- ./col-4 -->
+
+                    <div class="col-4 col-md-2">
+                        <div class="tool-card d-flex justify-content-center align-items-center mx-auto text-center"
+                            data-tool-img="MySQL">
+                            <img src="./assets/tools-svg/mysql.svg" alt="MySQL Pic">
+                        </div> <!-- ./tool-card -->
+                    </div> <!-- ./col-4 -->
+
+                    <div class="col-4 col-md-2">
+                        <div class="tool-card d-flex justify-content-center align-items-center mx-auto text-center"
+                            data-tool-img="PostgreSQL">
+                            <img src="./assets/tools-svg/postgresql.svg" alt="PostgreSQL Pic">
+                        </div> <!-- ./tool-card -->
+                    </div> <!-- ./col-4 -->
+
+                    <div class="col-4 col-md-2">
+                        <div class="tool-card d-flex justify-content-center align-items-center mx-auto text-center"
+                            data-tool-img="Node.js">
+                            <img src="./assets/tools-svg/nodedotjs.svg" alt="Node.js Pic">
+                        </div> <!-- ./tool-card -->
+                    </div> <!-- ./col-4 -->
+
+                    <div class="col-4 col-md-2">
+                        <div class="tool-card d-flex justify-content-center align-items-center mx-auto text-center"
+                            data-tool-img="Figma">
+                            <img src="./assets/tools-svg/figma.svg" alt="Figma Pic">
+                        </div> <!-- ./tool-card -->
+                    </div> <!-- ./col-4 -->
+                </div> <!-- ./toolsIcons -->
+
+                <div class="tools-extra tools-panel is-hidden" id="certificates">
                     <h3 class="tools-extra__title">Certificates</h3>
+                    <div class="cert-scroll">
                     <div class="cert-grid">
                         <a class="cert-card" href="./img/certificate/GOOGLE%20AI.pdf" target="_blank" rel="noopener">
                             <div class="cert-card__media"><img src="./img/certificate/thumbs/google-ai.jpg" alt="Google AI certificate" loading="lazy"></div>
@@ -624,6 +710,7 @@
                             </div>
                         </a>
                     </div> <!-- ./cert-grid -->
+                    </div> <!-- ./cert-scroll -->
                 </div> <!-- ./tools-extra -->
             </div> <!-- ./container -->
         </section> <!-- ./tools -->
@@ -872,6 +959,22 @@
     <script src="./dist/js/main.bundle.js"></script>
 
     <script>
+        // Tools / Certificates switch: only one panel visible at a time, Tools shown by default
+        (function () {
+            var btns = document.querySelectorAll('.tools-switch__btn');
+            var panels = document.querySelectorAll('.tools-panel');
+            btns.forEach(function (btn) {
+                btn.addEventListener('click', function () {
+                    btns.forEach(function (b) { b.classList.remove('is-active'); b.setAttribute('aria-selected', 'false'); });
+                    panels.forEach(function (p) { p.classList.add('is-hidden'); });
+                    btn.classList.add('is-active');
+                    btn.setAttribute('aria-selected', 'true');
+                    var target = document.getElementById(btn.getAttribute('data-target'));
+                    if (target) target.classList.remove('is-hidden');
+                });
+            });
+        })();
+
         // Works slider: wire prev/next arrows + let manual control take over from autoplay
         (function () {
             var sw = document.querySelector('.mySwiper');
